@@ -1,13 +1,16 @@
 package com.yuriclaro.workshopmongo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.yuriclaro.workshopmongo.dto.AuthorDTO;
+import com.yuriclaro.workshopmongo.dto.CommentDTO;
 
 @Document
 public class Post implements Serializable {
@@ -20,6 +23,7 @@ public class Post implements Serializable {
 	private String body;
 	private AuthorDTO authorDTO;
 	
+	private List<CommentDTO> comments = new ArrayList<>();
 
 	public Post(String id, Date date, String title, String body, AuthorDTO authorDTO) {
 		super();
@@ -74,6 +78,14 @@ public class Post implements Serializable {
 		return serialVersionUID;
 	}
 
+	public List<CommentDTO> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<CommentDTO> comments) {
+		this.comments = comments;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(body, date, id, title, authorDTO);
@@ -90,7 +102,5 @@ public class Post implements Serializable {
 		Post other = (Post) obj;
 		return Objects.equals(body, other.body) && Objects.equals(date, other.date) && Objects.equals(id, other.id)
 				&& Objects.equals(title, other.title) && Objects.equals(authorDTO, other.authorDTO);
-	}
-
-	
+	}	
 }
